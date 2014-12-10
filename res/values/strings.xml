@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">MP3Prayer</string>
+    <string name="child1_of_tab1">所有歌曲</string>
+    <string name="child2_of_tab1">我的音乐</string>
+    <string name="child3_of_tab1">播放列表</string>
+    <string name="child1_of_tab2">正在下载</string>
+    <string name="child2_of_tab2">已下载</string>
+	<string name="root_tab1">音乐</string>
+	<string name="root_tab2">下载</string>
+	<string name="root_tab3">搜索</string>
+</resources>

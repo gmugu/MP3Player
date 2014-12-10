@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <color name="background_tab_pressed">#0033B5E5</color>
+    <color name="tab_strip_indicator_color">#ff00ff00</color>
+    <color name="tab_strip_text_color">#ff000000</color>
+    <color name="tab_strip_background_color">#89fafafa</color>
+	<color name="tab_strip_text_color_on_selected">#ff00ff00</color>
+	
+	<color name="root_tab_text_color">#fffafafa</color>
+	<color name="root_tab_text_color_on_selected">#fffa0505</color>
+	<color name="root_tab_background_color">#65116600</color>
+	
+	<color name="lightwhite">#bfff</color>
+    <color name="white">#bf00</color>
+    <color name="red">#bf00</color>
+    
+    
+</resources>
