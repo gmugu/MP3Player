@@ -20,14 +20,14 @@ public class PlayService extends Service {
 	private MyBinder binder = new MyBinder();
 
 	/**
-	 * ²¥·ÅÄ£Ê½
+	 * æ’­æ”¾æ¨¡å¼
 	 */
 	public final static int MODE_ONE_LOOP = 1;
 	public final static int MODE_ALL_LOOP = 2;
 	public final static int MODE_RANDOM = 3;
 	public final static int MODE_SEQUENCE = 4;
 	/**
-	 * ²¥·Å×´Ì¬
+	 * æ’­æ”¾çŠ¶æ€
 	 */
 	public final static int STATE_PLAYING = 5;
 	public final static int STATE_PAUSE = 6;
@@ -74,7 +74,7 @@ public class PlayService extends Service {
 	public class MyBinder extends Binder {
 
 		/**
-		 * ´«ÈëÒª²¥·ÅµÄÁĞ±í
+		 * ä¼ å…¥è¦æ’­æ”¾çš„åˆ—è¡¨
 		 * 
 		 */
 		public void startPlayList(ArrayList<HashMap<String, Object>> list,
@@ -84,11 +84,11 @@ public class PlayService extends Service {
 				return;
 			}
 			if (list.size() <= 0) {
-				Log.e(TAG, "²¥·ÅÁĞ±íÃ»ÓĞ¸è");
+				Log.e(TAG, "æ’­æ”¾åˆ—è¡¨æ²¡æœ‰æ­Œ");
 				return;
 			}
 			if (musicPosition >= list.size()) {
-				Log.e(TAG, "starMusicPosition´¦Ã»ÓĞ¸èÇú");
+				Log.e(TAG, "starMusicPositionå¤„æ²¡æœ‰æ­Œæ›²");
 				return;
 			}
 			if (currentState != STATE_STOP) {
@@ -107,7 +107,7 @@ public class PlayService extends Service {
 		}
 
 		/**
-		 * ³ª°É£¬ÓĞÈËÏëÌı
+		 * å”±å§ï¼Œæœ‰äººæƒ³å¬
 		 */
 		public void play(int position) {
 
@@ -147,7 +147,7 @@ public class PlayService extends Service {
 		}
 
 		/**
-		 * ÔİÍ£
+		 * æš‚åœ
 		 */
 		public void pause() {
 			if (currentState == STATE_PLAYING) {
@@ -160,7 +160,7 @@ public class PlayService extends Service {
 		}
 
 		/**
-		 * ¼ÌĞø
+		 * ç»§ç»­
 		 */
 		public void goon() {
 			if (currentState == STATE_PAUSE) {
@@ -173,7 +173,7 @@ public class PlayService extends Service {
 		}
 
 		/**
-		 * ±ğ³ªÁË
+		 * åˆ«å”±äº†
 		 */
 		public void stop() {
 			if (currentState != STATE_STOP) {
@@ -186,7 +186,7 @@ public class PlayService extends Service {
 		}
 
 		/**
-		 * ºóÒ»Ê×
+		 * åä¸€é¦–
 		 */
 		public void next() {
 			if (Playlist == null) {
@@ -221,7 +221,7 @@ public class PlayService extends Service {
 		}
 
 		/**
-		 * Ç°Ò»Ê×
+		 * å‰ä¸€é¦–
 		 */
 		public void previous() {
 			if (currentPlayingMusicPosition == 0) {
@@ -232,14 +232,14 @@ public class PlayService extends Service {
 		}
 
 		/**
-		 * ÓĞÈË¸Ä±äÄ£Ê½ÁË£¬ÎÒµÃ°ÑËü¼ÇÏÂÀ´
+		 * æœ‰äººæ”¹å˜æ¨¡å¼äº†ï¼Œæˆ‘å¾—æŠŠå®ƒè®°ä¸‹æ¥
 		 */
 		public void setPlayMode(int mode) {
 			currentMode = mode;
 		}
 
 		/**
-		 * ¸æËß±ğÈË£¬ÄãÏÖÔÚµ½µ×ÊÇË³Ğò²¥·Å£¬»¹ÊÇËæ»úÂÒµ¯
+		 * å‘Šè¯‰åˆ«äººï¼Œä½ ç°åœ¨åˆ°åº•æ˜¯é¡ºåºæ’­æ”¾ï¼Œè¿˜æ˜¯éšæœºä¹±å¼¹
 		 * 
 		 * @MODE_ONE_LOOP = 1;
 		 * @MODE_ALL_LOOP = 2;

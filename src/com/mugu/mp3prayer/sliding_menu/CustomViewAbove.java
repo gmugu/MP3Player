@@ -166,7 +166,7 @@ public class CustomViewAbove extends ViewGroup {
 
 	}
 
-	/*
+	/**
 	 * @author zhaobinbin
 	 */
 	private static OnMenuMovingListener mOnMenuMovingListener = null;
@@ -180,7 +180,7 @@ public class CustomViewAbove extends ViewGroup {
 		mOnMenuMovingListener = I;
 	}
 
-	/*
+	/**
 	 * end
 	 */
 

@@ -33,7 +33,7 @@ public class MusicFromNetManager extends BaseNetManager {
 
 	}
 
-	/*
+	/**
 	 * 从网络获取虾米网请求码
 	 */
 	private String getXiamiVar_xiamitokenByNet() throws MalformedURLException,
@@ -49,7 +49,7 @@ public class MusicFromNetManager extends BaseNetManager {
 
 	}
 
-	/*
+	/**
 	 * 通过关键字获取歌曲信息
 	 */
 	public ArrayList<HashMap<String, String>> searchMusicFromNet(String keyword) {

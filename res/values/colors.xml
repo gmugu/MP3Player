@@ -9,7 +9,7 @@
 	
 	<color name="root_tab_text_color">#fffafafa</color>
 	<color name="root_tab_text_color_on_selected">#fffa0505</color>
-	<color name="root_tab_background_color">#65116600</color>
+	<color name="root_tab_background_color">#99114400</color>
 	
 	<color name="lightwhite">#bfff</color>
     <color name="white">#bf00</color>

@@ -69,14 +69,11 @@ public class ChildOfDownload_DoneDownload extends Fragment {
 				@Override
 				public void handleMessage(Message msg) {
 					if (msg.what == 0x123) {
-						if (seekBar != null) {
-							if (binder.getPlayer() == null) {
-								Log.d(TAG, "binder.getPlayer()==null");
-							}
-							seekBar.setProgress(binder.getPlayer()
-									.getCurrentPosition());
-						}
+						seekBar.setProgress(binder.getPlayer()
+								.getCurrentPosition());
+						Log.d(TAG, binder.getCurrentPlayingMusic().toString());
 					}
+
 				}
 			};
 			mView.addView(bn1);
@@ -119,12 +116,15 @@ public class ChildOfDownload_DoneDownload extends Fragment {
 				public void onStartPlay(MediaPlayer player,
 						HashMap<String, Object> currentPlayingMusic) {
 					seekBar.setMax(player.getDuration());
-					new Timer().schedule(new TimerTask() {
+					final Timer mTimer = new Timer();
+					mTimer.schedule(new TimerTask() {
 
 						@Override
 						public void run() {
+							if (MainActivity.getInstance().getIsFinish() == true) {
+								mTimer.cancel();
+							}
 							handler.sendEmptyMessage(0x123);
-							Log.d(TAG, "onTimerTask");
 						}
 					}, 0, 100);
 				}
