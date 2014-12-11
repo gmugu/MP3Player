@@ -1,6 +1,10 @@
 package com.mugu.mp3prayer.activity;
 
+import java.io.IOException;
+import java.io.InputStream;
+
 import com.mugu.mp3prayer.R;
+import com.mugu.mp3prayer.config.Config;
 import com.mugu.mp3prayer.fragment.MainContentFragment;
 import com.mugu.mp3prayer.fragment.MenuFragment;
 import com.mugu.mp3prayer.service.PlayService;
@@ -10,6 +14,10 @@ import com.mugu.mp3prayer.sliding_menu.CustomViewAbove.OnMenuMovingListener;
 import android.content.ComponentName;
 import android.content.Intent;
 import android.content.ServiceConnection;
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.support.v4.app.FragmentActivity;
@@ -34,9 +42,10 @@ public class MainActivity extends FragmentActivity {
 	private SlidingMenu slidingMenu;
 	private FrameLayout mainContentFrame;
 	private FrameLayout menuContentFrame;
-	private int DisplayWidth;
 	private PlayService.MyBinder binder;
 	boolean isFinish = false;
+	public int DisplayWidth;
+	public int DisplayHeigh;
 
 	private ServiceConnection conn = new ServiceConnection() {
 
@@ -62,17 +71,44 @@ public class MainActivity extends FragmentActivity {
 		}
 		mActivity = this;
 
-		mainContentFrame = (FrameLayout) findViewById(R.id.container);
-		menuContentFrame = (FrameLayout) (getLayoutInflater().inflate(
-				R.layout.menu_frame, null)).findViewById(R.id.menu_frame);
-		// 获取屏幕大小
-		DisplayMetrics metric = new DisplayMetrics();
-		getWindowManager().getDefaultDisplay().getMetrics(metric);
-		DisplayWidth = metric.widthPixels;
-
+		getDisplayBound();
 		initSlidingMenu();
 		initService();
 
+	}
+
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		switch (keyCode) {
+		case KeyEvent.KEYCODE_BACK:
+			//
+			// if (slidingMenu.isMenuShowing()) {
+			// slidingMenu.showContent();
+			// } else {
+			// Intent intent = new Intent(Intent.ACTION_MAIN);
+			// intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			// intent.addCategory(Intent.CATEGORY_HOME);
+			// startActivity(intent);
+			// }
+			finish();
+			isFinish = true;
+			break;
+
+		case KeyEvent.KEYCODE_MENU:
+
+			slidingMenu.toggle();
+
+			break;
+		}
+
+		return false;
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+		unbindService(conn);
 	}
 
 	public static MainActivity getInstance() {
@@ -89,8 +125,12 @@ public class MainActivity extends FragmentActivity {
 		return binder;
 	}
 
-	public void addFragment() {
-
+	// 获取屏幕大小
+	private void getDisplayBound() {
+		DisplayMetrics metric = new DisplayMetrics();
+		getWindowManager().getDefaultDisplay().getMetrics(metric);
+		DisplayWidth = metric.widthPixels;
+		DisplayHeigh = metric.heightPixels;
 	}
 
 	private void initService() {
@@ -103,9 +143,12 @@ public class MainActivity extends FragmentActivity {
 		getSupportFragmentManager().beginTransaction()
 				.add(R.id.menu_frame, new MenuFragment()).commit();
 
-		// slidingMenu.setbottomBackgroundColor(0xff990912);
-		slidingMenu.setbottomBackground(getResources().getDrawable(
-				R.drawable.bg_start));
+		mainContentFrame = (FrameLayout) findViewById(R.id.container);
+		menuContentFrame = (FrameLayout) (getLayoutInflater().inflate(
+				R.layout.menu_frame, null)).findViewById(R.id.menu_frame);
+		slidingMenu.setbottomBackground(new BitmapDrawable(getResources(),
+				getImageFromAssetsFile(Config.getInstent()
+						.getBottomBackground())));
 
 		slidingMenu.setMenu(R.layout.menu_frame);
 		slidingMenu.attachToActivity(this, SlidingMenu.SLIDING_CONTENT);
@@ -137,39 +180,19 @@ public class MainActivity extends FragmentActivity {
 		});
 	}
 
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-
-		switch (keyCode) {
-		case KeyEvent.KEYCODE_BACK:
-			//
-			// if (slidingMenu.isMenuShowing()) {
-			// slidingMenu.showContent();
-			// } else {
-			// Intent intent = new Intent(Intent.ACTION_MAIN);
-			// intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-			// intent.addCategory(Intent.CATEGORY_HOME);
-			// startActivity(intent);
-			// }
-			Log.d(TAG, "exit!");
-			finish();
-			isFinish = true;
-			break;
-
-		case KeyEvent.KEYCODE_MENU:
-
-			slidingMenu.toggle();
-
-			break;
+	private Bitmap getImageFromAssetsFile(String fileName) {
+		Bitmap image = null;
+		AssetManager am = getResources().getAssets();
+		try {
+			InputStream is = am.open(fileName);
+			image = BitmapFactory.decodeStream(is);
+			is.close();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 
-		return false;
-	}
+		return image;
 
-	@Override
-	protected void onDestroy() {
-		super.onDestroy();
-		unbindService(conn);
 	}
 
 }

@@ -1,7 +1,15 @@
 package com.mugu.mp3prayer.fragment;
 
-import com.mugu.mp3prayer.R;
+import java.io.IOException;
+import java.io.InputStream;
 
+import com.mugu.mp3prayer.R;
+import com.mugu.mp3prayer.config.Config;
+
+import android.content.res.AssetManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -20,6 +28,7 @@ import android.widget.TextView;
 
 public class MainContentFragment extends Fragment implements OnClickListener {
 
+	@SuppressWarnings("unused")
 	private final String TAG = getClass().getSimpleName();
 
 	private View root;
@@ -63,6 +72,9 @@ public class MainContentFragment extends Fragment implements OnClickListener {
 		downloadCase.setOnClickListener(this);
 		searchCase.setOnClickListener(this);
 
+		root.setBackground(new BitmapDrawable(getResources(),
+				getImageFromAssetsFile(Config.getInstent()
+						.getMainContentBackground())));
 		playBar = (RelativeLayout) root.findViewById(R.id.play_bar);
 		playBar.setOnClickListener(new OnClickListener() {
 
@@ -86,7 +98,7 @@ public class MainContentFragment extends Fragment implements OnClickListener {
 				Bundle savedInstanceState) {
 			LinearLayout ll = new LinearLayout(getActivity());
 			TextView tv = new TextView(getActivity());
-			tv.setText("²¥·Å½çÃæ");
+			tv.setText("ï¿½ï¿½ï¿½Å½ï¿½ï¿½ï¿½");
 			tv.setTextSize(40);
 			ll.setGravity(Gravity.CENTER);
 			ll.addView(tv);
@@ -202,5 +214,20 @@ public class MainContentFragment extends Fragment implements OnClickListener {
 				R.color.root_tab_text_color_on_selected));
 
 		previousCase = which;
+	}
+
+	private Bitmap getImageFromAssetsFile(String fileName) {
+		Bitmap image = null;
+		AssetManager am = getResources().getAssets();
+		try {
+			InputStream is = am.open(fileName);
+			image = BitmapFactory.decodeStream(is);
+			is.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return image;
+
 	}
 }
